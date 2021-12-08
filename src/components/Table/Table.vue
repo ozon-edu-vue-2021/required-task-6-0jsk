@@ -34,17 +34,10 @@ export default {
     }
   },
   mounted() {
-    this.observer = new IntersectionObserver(([entry]) => {
-      if (entry && entry.isIntersecting) {
-        this.$emit("intersected");
-        console.log(this.$refs.body);
-      }
-    }, { threshold: 0.9 });
-
-    this.observer.observe(this.$refs.body);
+    window.addEventListener("scroll", this.handleScroll);
   },
   destroyed() {
-    this.observer.disconnect();
+    window.removeEventListener("scroll", this.handleScroll);
   },
   computed: {
     orderedMap() {
@@ -83,6 +76,13 @@ export default {
         return Object.keys(filters)
           .every(prop => String(row[prop]) === String(filters[prop]))
       });
+    },
+    handleScroll() {
+      const table = this.$refs.table;
+
+      if (table.getBoundingClientRect().bottom < window.innerHeight) {
+        this.$emit("intersected");
+      }
     },
     renderHead(h, columnsOptions) {
       return columnsOptions.map((column) => {
@@ -141,9 +141,9 @@ export default {
 
     return (
       <div>
-        <table className={this.$style?.table}>
+        <table ref="table" className={this.$style?.table}>
           <thead>{...columnsHead}</thead>
-          <tbody ref="body">{...rows}</tbody>
+          <tbody>{...rows}</tbody>
         </table>
         {this.itemsPerPage &&
           <Pager currentPage={this.currentPage} on={{change: page => this.$emit("onPageChange", page)}}/>}

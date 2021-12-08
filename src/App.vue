@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <b-table :data="rows" :cur="0" @intersected="intersected">
+    <b-table :data="rows" :current-page="currentPage" @intersected="intersected">
       <b-table-column prop="id" title="ID" />
       <b-table-column prop="postId" title="Post ID" />
 
@@ -35,7 +35,7 @@ export default {
   data() {
     return {
       rows: [],
-      currentPage: 1
+      currentPage: 1,
     };
   },
   watch: {
