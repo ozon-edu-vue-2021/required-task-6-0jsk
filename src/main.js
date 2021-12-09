@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faCaretDown, faCaretUp } from "@fortawesome/free-solid-svg-icons";
 import VueVirtualScroller from 'vue-virtual-scroller';
+import 'vue-virtual-scroller/dist/vue-virtual-scroller.css'
 
 Vue.config.productionTip = false
 
